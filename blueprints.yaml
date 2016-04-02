@@ -1,0 +1,34 @@
+name: Newsletter
+version: 0.1.0
+description: Light Newsletter plugin for Grav
+icon: newspaper-o
+author:
+  name: Max Pronko
+  email: max.pronko@gmail.com
+  url: http://www.maxpronko.com
+keywords: plugin, newsletter, subscriber
+homepage: https://github.com/getgrav/grav-plugin-newsletter
+bugs: https://github.com/getgrav/grav-plugin-newsletter/issues
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    limit:
+      type: text
+      label: Test
+      validate:
+        type: number
+        min: 10
+        max: 1000

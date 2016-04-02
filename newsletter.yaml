@@ -1,0 +1,10 @@
+enabled: true
+admin:
+  route: 'newsletter'
+  menu_icon: 'fa-newspaper-o'
+  subscriber:
+    enable:
+      redirect: '/newsletter'
+dateformat:
+  long: 'Y-m-d h:i'
+

@@ -1,0 +1,5 @@
+{% if newsletter.json_response %}
+{{ newsletter.json_response|json_encode }}
+{% else %}
+{}
+{% endif %}

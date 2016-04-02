@@ -1,0 +1,29 @@
+<div class="grav-update subscribers"></div>
+
+<h1>
+    {{ "PLUGIN_NEWSLETTER.NEWSLETTER_SUBSCRIBERS"|tu }}
+</h1>
+
+<table>
+    {% for subscriber in newsletter.subscribers() %}
+        <tr data-gpm-plugin="{{ subscriber.email|url_encode }}">
+            <td class="gpm-name">
+                {#<a href="{{ base_url_relative }}/subscribers/{{ subscriber.email|url_encode }}">#}
+                    {{ subscriber.name }}
+                {#</a>#}
+                <span class="gpm-version">{{ subscriber.email }}</span>
+            </td>
+            <td class="gpm-actions">
+                <a class="{{ subscriber.subscribed ? 'enabled' : 'disabled' }}" href="{{ uri.addNonce(base_url_relative ~ '/newsletter/subscriber' ~ config.system.param_sep ~ subscriber.email|url_encode ~ '/task' ~ config.system.param_sep ~ (subscriber.subscribed ? 'subscriber.disable' : 'subscriber.enable'), 'admin-form', 'admin-nonce') }}">
+                    <i class="fa fa-fw fa-toggle-{{ subscriber.subscribed ? 'on' : 'off' }}"></i>
+                </a>
+                <span class="gpm-details-expand"><i class="fa fa-chevron-down"></i></span>
+            </td>
+            <td class="gpm-details">
+                <div class="table-wrapper">
+                    {% include 'partials/subscriber-data.html.twig' with { plugin: subscriber } %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

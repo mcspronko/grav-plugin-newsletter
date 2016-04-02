@@ -1,0 +1,20 @@
+<table>
+    {% if subscriber.created %}
+    <tr>
+        <td>{{ "PLUGIN_NEWSLETTER.CREATED"|tu }}:</td>
+        <td>
+            {{ subscriber.created|date(config.plugins.newsletter.dateformat.long) }}
+        </td>
+    </tr>
+    {% endif %}
+    {% if subscriber.welcome_email %}
+    <tr>
+        <td>{{ "PLUGIN_NEWSLETTER.WELCOME_EMAIL_RECEIVED"|tu }}:</td>
+        <td>{{ subscriber.welcome_email ? "PLUGIN_NEWSLETTER.WELCOME_EMAIL_RECEIVED_YES"|tu : "PLUGIN_NEWSLETTER.WELCOME_EMAIL_RECEIVED_NO"|tu }}</a></td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td>{{ "PLUGIN_NEWSLETTER.EMAILS_SENT"|tu }}:</td>
+        <td>{{ subscriber.emails_sent ? subscriber.emails_sent : 0 }}</a></td>
+    </tr>
+</table>

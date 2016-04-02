@@ -1,2 +1,2 @@
-# grav-plugin-subscription
-Subscription Plugin for Grav CMS
+# Newsletter Plugin for Grav CMS
+

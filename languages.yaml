@@ -1,0 +1,17 @@
+en:
+  PLUGIN_NEWSLETTER:
+    MENU_LABEL: Newsletter
+    NEWSLETTER: Newsletter
+    AVAILABLE_TEMPLATES: 'Newsletter Templates'
+    NEWSLETTER_SUBSCRIBERS: 'Subscribers'
+    CREATED: 'Created'
+    EMAILS_SENT: 'Emails Sent'
+    BACK: Back
+    SEND: Send
+    WELCOME_EMAIL_RECEIVED: 'Welcome Email Sent'
+    WELCOME_EMAIL_RECEIVED_NO: 'No'
+    WELCOME_EMAIL_RECEIVED_YES: 'Yes'
+
+    SUBSCRIBE_SUCCESSFUL: You have been successfully subscribed to our newsletter.
+
+    BTN_SUBSCRIBE: Subscribe
