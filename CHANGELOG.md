@@ -1,5 +1,7 @@
-# v0.1.0
-## 23/01/2016
+# v0.0.2-dev 
 
-1. [](#new)
-    * ChangeLog started...
+* TBD
+
+# v0.0.1 - 2016-01-23
+
+* Initial plugin directory implementation
