@@ -4,6 +4,20 @@ This plugin is under development. Pull requests and contributions are more than 
 # Newsletter Plugin for Grav CMS
 Newsletter Plugin enables users fill in subscription form on a website based on Grav CMS.
 
+## Installation
+
+### Development
+
+Use modman package manager to install the plugin.
+
+From the Grav CMS project directory perform the commands
+```bash
+modman init
+modman clone git@github.com:mcspronko/grav-plugin-newsletter.git
+```
+
+As a result, the new newsletter plugin should appear under user/plugins/newsletter directory. 
+
 ## Example of Form Configuration
 ```yaml
 form:

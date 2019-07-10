@@ -1,10 +1,1 @@
-#modman configuration plugin
-blueprints.yaml          user/plugins/newsletter/blueprints.yaml
-composer.json            user/plugins/newsletter/composer.json
-hede.json                user/plugins/newsletter/hebe.json
-languages.yaml           user/plugins/newsletter/languages.yaml
-newsletter.php           user/plugins/newsletter/newsletter.php
-newsletter.yaml          user/plugins/newsletter/newsletter.yaml
-admin                    user/plugins/newsletter/admin/
-themes                   user/plugins/newsletter/themes/
-classes                  user/plugins/newsletter/classes/
+./ user/plugins/newsletter/
