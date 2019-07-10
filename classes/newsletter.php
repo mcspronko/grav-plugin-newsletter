@@ -2,14 +2,19 @@
 
 namespace Grav\Plugin\Newsletter;
 
-use Grav\Common\Data;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use Grav\Common\File\CompiledYamlFile;
 use RocketTheme\Toolbox\Session\Message;
 
+/**
+ * Class Newsletter
+ */
 class Newsletter
 {
+    /**
+     * @var Grav
+     */
     protected $grav;
 
     public function __construct(Grav $grav)

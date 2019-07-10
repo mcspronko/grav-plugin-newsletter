@@ -1,12 +1,12 @@
 <?php
+
 namespace Grav\Plugin\Newsletter;
 
-use Grav\Common\Data\Blueprints;
 use Grav\Common\Data\Data;
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\GravTrait;
-use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
+
 /**
  * Subscriber object
  */
@@ -15,11 +15,8 @@ class Subscriber extends Data
     use GravTrait;
 
     /**
-     * Load subscriber
-     *
-     * Always creates user object. To check if user exists, use $this->exists().
-     *
-     * @param string $username
+     * @param string $email
+     * @param array $post
      * @return Subscriber
      */
     public static function load($email, array $post = [])

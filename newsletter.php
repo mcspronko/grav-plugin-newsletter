@@ -2,18 +2,20 @@
 
 namespace Grav\Plugin;
 
-use Grav\Common\Page\Collection;
+use Composer\Autoload\ClassLoader;
 use Grav\Common\Plugin;
 use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
-use Grav\Common\Taxonomy;
 use RocketTheme\Toolbox\Event\Event;
-use Grav\Plugin\Newsletter;
+use Grav\Plugin\Newsletter\Newsletter as CustomNewsletter;
 
+/**
+ * Class NewsletterPlugin
+ */
 class NewsletterPlugin extends Plugin
 {
     /**
-     * @var Newsletter\Newsletter
+     * @var CustomNewsletter
      */
     protected $newsletter;
 
@@ -22,23 +24,32 @@ class NewsletterPlugin extends Plugin
      */
     public static function getSubscribedEvents() {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 1000],
+            'onPluginsInitialized' => [
+                ['autoload', 100001],
+                ['onPluginsInitialized', 1000]
+            ],
             'onTask.subscriber.enable' => ['subscriberController', 0],
             'onTask.subscriber.disable' => ['subscriberController', 0],
             'onFormProcessed' => ['createSubscriberController', 0]
         ];
     }
 
+    /**
+     * [onPluginsInitialized:1000] Composer autoload.
+     *
+     * @return ClassLoader
+     */
+    public function autoload()
+    {
+        return require __DIR__ . '/vendor/autoload.php';
+    }
+
+    /**
+     * Plugin initialization
+     */
     public function onPluginsInitialized()
     {
-        // Autoload classes
-        $autoload = __DIR__ . '/vendor/autoload.php';
-        if (!is_file($autoload)) {
-            throw new \Exception('Newsletter Plugin failed to load. Composer dependencies not met.');
-        }
-        require_once $autoload;
-
-        $this->newsletter = new Newsletter\Newsletter($this->grav);
+        $this->newsletter = new CustomNewsletter($this->grav);
 
         $route = $this->config->get('plugins.newsletter.admin.route');
         $icon = $this->config->get('plugins.newsletter.admin.menu_icon');
@@ -52,12 +63,10 @@ class NewsletterPlugin extends Plugin
             ]
         ];
 
-//        if ($route && $route == $uri->path()) {
-            $this->enable([
-                'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0],
-                'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
-            ]);
-//        }
+        $this->enable([
+            'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0],
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+        ]);
     }
 
     public function onAdminTwigTemplatePaths(Event $event)
