@@ -1,14 +1,14 @@
 name: Newsletter
-version: 0.1.0
-description: Light Newsletter plugin for Grav
+version: 0.0.1
+description: Newsletter plugin for Grav CMS
 icon: newspaper-o
 author:
   name: Max Pronko
-  email: max.pronko@gmail.com
-  url: http://www.maxpronko.com
-keywords: plugin, newsletter, subscriber
-homepage: https://github.com/getgrav/grav-plugin-newsletter
-bugs: https://github.com/getgrav/grav-plugin-newsletter/issues
+  email: max@pronkoconsulting.com
+  url: https://www.maxpronko.com
+keywords: newsletter, marketing
+homepage: https://github.com/mcspronko/grav-plugin-newsletter
+bugs: https://github.com/mcspronko/grav-plugin-newsletter/issues
 license: MIT
 
 form:

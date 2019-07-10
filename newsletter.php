@@ -85,10 +85,13 @@ class NewsletterPlugin extends Plugin
         $event['paths'] = [__DIR__ . '/themes/admin/templates'];
     }
 
+    /**
+     * Load Twig variables
+     */
     public function onTwigSiteVariables()
     {
+        /** @var Twig $twig */
         $twig = $this->grav['twig'];
-
         $twig->twig_vars['newsletter'] = $this->newsletter;
     }
 
