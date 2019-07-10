@@ -26,6 +26,7 @@ class NewsletterPlugin extends Plugin
         return [
             'onPluginsInitialized' => [
                 ['autoload', 100001],
+                ['setup', 100000],
                 ['onPluginsInitialized', 1000]
             ],
             'onTask.subscriber.enable' => ['subscriberController', 0],
@@ -42,6 +43,11 @@ class NewsletterPlugin extends Plugin
     public function autoload()
     {
         return require __DIR__ . '/vendor/autoload.php';
+    }
+
+    public function setup()
+    {
+        // @TODO create user directory
     }
 
     /**
@@ -71,12 +77,12 @@ class NewsletterPlugin extends Plugin
         }
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAdminTwigTemplatePaths(Event $event)
     {
-        $paths = $event['paths'];
-        $paths[] = __DIR__ . '/themes/admin/templates';
-
-        $event['paths'] = $paths;
+        $event['paths'] = [__DIR__ . '/themes/admin/templates'];
     }
 
     public function onTwigSiteVariables()
