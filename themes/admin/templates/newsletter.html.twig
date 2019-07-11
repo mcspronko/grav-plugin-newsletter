@@ -1,5 +1,10 @@
 {% extends 'partials/base.html.twig' %}
 
+{% block stylesheets %}
+    {% do assets.addCss('plugin://newsletter/css/newsletter.css') %}
+    {{ parent() }}
+{% endblock %}
+
 {% block titlebar %}
     <h1><i class="fa fa-fw fa-newspaper-o"></i> {{ "PLUGIN_NEWSLETTER.NEWSLETTER"|tu }}</h1>
 {% endblock %}

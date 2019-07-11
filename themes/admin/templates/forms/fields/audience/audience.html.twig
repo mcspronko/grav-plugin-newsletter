@@ -1,18 +1,12 @@
 {% set delete_url = uri.addNonce(base_url_relative ~ "/subscriber.json/subscriber:SUBSCRIBER_ID/task" ~ config.system.param_sep ~ 'subscriberDelete', 'admin-form', 'admin-nonce') %}
-<div class="admin-block">
+<div class="newsletter-audience-admin admin-block">
     <div class="latest">
-        <div class="button-bar" style="text-align: right;
-    float: right;
-    z-index: 0;
-    padding: 0;
-    background: 0;
-    width: auto;">
+        <div class="button-bar">
             <a class="button" href="#modal" data-remodal-target="modal-subscriber"><i class="fa fa-fw fa-plus"></i>{{ "Add Subscriber"|tu }}</a>
         </div>
         <h1>{{ "Subscribers"|tu }}</h1>
     </div>
 </div>
-<span>nbsp;</span>
 <div class="alert info">{{ 'You have' }} <strong>{{ audience|count }}</strong> {{ 'subscribers.' }}</div>
 <table class="newsletter-audience noflex">
     <thead>
