@@ -1,0 +1,51 @@
+{% set delete_url = uri.addNonce(base_url_relative ~ "/subscriber.json/subscriber:%SUBSCRIBER/task" ~ config.system.param_sep ~ 'subscriberDelete', 'admin-form', 'admin-nonce') %}
+
+<span>nbsp;</span>
+<div class="alert info">{{ 'You have' }} <strong>{{ audience|count }}</strong> {{ 'subscribers.' }}</div>
+<table class="newsletter-audience noflex">
+    <thead>
+    <tr>
+        <th>{{ "Email"|tu }}</th>
+        <th>{{ "Name"|tu }}</th>
+        <th class="pad">{{ "Created Date"|tu }}</th>
+        <th class="right pad">{{ "Status"|tu }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if audience|count == 0 %}
+        <tr>
+            <td colspan="5" class="error" style="text-align: center;">{{ "There are no subscribers yet."|tu }}</td>
+        </tr>
+    {% else %}
+        {% for member in audience|default([]) %}
+            {% set encoded_email = member.email|base64_encode|url_encode %}
+            {% set member_delete = delete_url|replace({'%SUBSCRIBER': 'test'}) %}
+            <tr>
+                <td>{{ member.email }} {{ delete_url }} {{ member_delete }}</td>
+                <td>{{ member.name }}</td>
+                <td> <i class="fa fa-clock-o"></i> {{ member.created|date }}</td>
+                <td class="right pad">
+                    {% if member.is_subscribed == '0' %}
+                        {% set run_type = 'error' %}
+                        {% set run_hint = job_state.error %}
+                        {% set run_text = "<i class=\"fa fa-warning\"></i> Unsubscribed" %}
+                    {% else %}
+                        {% set run_type = 'info' %}
+                        {% if job_state.state is not defined %}
+                            {% set run_text = "<i class=\"fa fa-check\"></i> Subscribed"  %}
+                        {% else %}
+                            {% set run_text = "<i class=\"fa fa-check\"></i> Success" %}
+                        {% endif %}
+                    {% endif %}
+
+                    <span>
+                        <span class="badge {{ run_type }}">{{ run_text|raw }}</span>
+                    </span>
+                <td class="right pad nowrap">
+                    <span class="button button-small danger hint--bottom" data-hint="Delete" data-subscriber data-ajax="{{ member_delete }}"><i class="fa fa-close"></i></span>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>

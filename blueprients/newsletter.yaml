@@ -1,0 +1,33 @@
+title: Newsletter
+'@extends':
+  type: default
+  context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+
+      fields:
+        audience:
+          type: tab
+          title: Audience
+
+          fields:
+            header.an_example_text_field:
+              type: text
+              label: Add a number
+              default: 5
+              validate:
+                required: true
+                type: int
+
+            header.an_example_select_box:
+              type: select
+              label: Select one of the following
+              default: one
+              options:
+                one: One
+                two: Two
+                three: Three

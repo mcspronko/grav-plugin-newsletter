@@ -3,9 +3,9 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
+use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
 use Grav\Common\Twig\Twig;
-use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
 use Grav\Plugin\Newsletter\Newsletter as CustomNewsletter;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
@@ -29,6 +29,7 @@ class NewsletterPlugin extends Plugin
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
             'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0],
             'onTwigInitialized' => ['onTwigInitialized', 0],
+            'onGetPageBlueprints' => ['onGetPageBlueprints', 0],
             'onAdminTwigSiteVariables' => ['onAdminTwigSiteVariables', 0],
             'onTask.subscriber.enable' => ['subscriberController', 0],
             'onTask.subscriber.disable' => ['subscriberController', 0],
@@ -81,6 +82,13 @@ class NewsletterPlugin extends Plugin
     public function onAdminTwigTemplatePaths(Event $event)
     {
         $event['paths'] = [__DIR__ . '/themes/admin/templates'];
+    }
+
+    public function onGetPageBlueprints($event)
+    {
+        /** @var Types $types */
+        $types = $event->types;
+        $types->scanBlueprints('plugins://' . $this->name . '/blueprints');
     }
 
     /**
