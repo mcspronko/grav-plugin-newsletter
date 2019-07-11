@@ -1,18 +1,12 @@
 {% extends 'partials/base.html.twig' %}
 
-{% set title = "PLUGIN_NEWSLETTER.NEWSLETTER"|tu %}
-
 {% block titlebar %}
-    <div class="button-bar">
-{#        <a class="button" href="{{ base_url }}"><i class="fa fa-reply"></i> {{ "PLUGIN_NEWSLETTER.BACK"|tu }}</a>#}
-        <a class="button" href="{{ base_url_relative }}/newsletter/send"><i class="fa fa-plus"></i> {{ "PLUGIN_NEWSLETTER.SEND"|tu }}</a>
-    </div>
     <h1><i class="fa fa-fw fa-newspaper-o"></i> {{ "PLUGIN_NEWSLETTER.NEWSLETTER"|tu }}</h1>
 {% endblock %}
 
 {% block content %}
     <div class="gpm gpm-newsletter">
         {% include 'partials/messages.html.twig' %}
-        {% include 'partials/newsletter_subscribers_list.html.twig' %}
+        {% include 'partials/audience.html.twig' %}
     </div>
 {% endblock %}

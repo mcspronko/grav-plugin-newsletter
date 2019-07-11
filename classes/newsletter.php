@@ -31,8 +31,7 @@ class Newsletter
         /** @var ResourceLocatorInterface $locator */
         $locator = $this->grav['locator'];
 
-        $dataDir = $locator->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
-        $fullPath = $dataDir;
+        $fullPath = $locator->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
         $iterator = new \DirectoryIterator($fullPath);
 
         $subscribers = [];
@@ -41,7 +40,7 @@ class Newsletter
                 continue;
             }
             $name = $file->getBasename();
-            $subscribers[$name] = CompiledYamlFile::instance($dataDir . DS . $name)->content();
+            $subscribers[$name] = CompiledYamlFile::instance($fullPath . DS . $name)->content();
         }
 
         return $subscribers;

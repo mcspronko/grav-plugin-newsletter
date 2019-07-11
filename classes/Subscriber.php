@@ -4,25 +4,34 @@ namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Data\Data;
 use Grav\Common\File\CompiledYamlFile;
-use Grav\Common\GravTrait;
+use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 
 /**
- * Subscriber object
+ * Subscriber
  */
 class Subscriber extends Data
 {
-    use GravTrait;
+    /**
+     * @var Grav
+     */
+    protected $grav;
+
+    public function __construct(Grav $grav, array $items = [], $blueprints = null)
+    {
+        $this->grav = $grav;
+        parent::__construct($items, $blueprints);
+    }
 
     /**
      * @param string $email
      * @param array $post
      * @return Subscriber
      */
-    public static function load($email, array $post = [])
+    public function load($email, array $post = [])
     {
         /** @var ResourceLocatorInterface $locator */
-        $locator = self::getGrav()['locator'];
+        $locator = $this->grav['locator'];
 
         // force lowercase of username
         $email = strtolower($email);

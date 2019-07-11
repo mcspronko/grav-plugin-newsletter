@@ -1,0 +1,24 @@
+<div class="grav-update subscribers"></div>
+
+<h1>
+    {{ "PLUGIN_NEWSLETTER.AUDIENCE"|tu }}
+</h1>
+
+<table>
+    {% for subscriber in newsletter.subscribers() %}
+        <tr data-gpm-plugin="{{ subscriber.email|url_encode }}">
+            <td class="gpm-newsletter-subscribername">
+                {#<a href="{{ base_url_relative }}/subscribers/{{ subscriber.email|url_encode }}">#}
+                    {{ subscriber.name }}
+                {#</a>#}
+                <span class="gpm-version">{{ subscriber.email }}</span>
+            </td>
+            <td class="gpm-newsletter-subscriber-created">
+                {{ subscriber.created|date(config.plugins.newsletter.dateformat.long) }}
+            </td>
+            <td class="gpm-newsletter-subscriber-created">
+                {{ subscriber.subcribed ? 'Subscribed' : 'Unsubscribed' }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

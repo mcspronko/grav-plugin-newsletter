@@ -4,6 +4,7 @@ en:
     NEWSLETTER: Newsletter
     AVAILABLE_TEMPLATES: 'Newsletter Templates'
     NEWSLETTER_SUBSCRIBERS: 'Subscribers'
+    AUDIENCE: 'Audience'
     CREATED: 'Created'
     EMAILS_SENT: 'Emails Sent'
     BACK: Back

@@ -11,19 +11,20 @@ use Grav\Common\Twig\Twig;
 class SubscribeController
 {
     /**
-     * @var \Grav\Common\Grav
+     * @var Grav
      */
-    public $grav;
+    protected $grav;
 
     /**
      * @var string
      */
-    public $action;
+    protected $action;
 
     /**
      * @var Form
      */
-    public $form;
+    protected $form;
+
     /**
      * @var string
      */
