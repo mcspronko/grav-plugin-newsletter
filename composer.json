@@ -2,7 +2,7 @@
     "name": "pronko/grav-plugin-newsletter",
     "description": "Newsletter plugin.",
     "keywords": ["newsletter"],
-    "homepage": "https://github.com/getgrav/grav-plugin-newsletter",
+    "homepage": "https://github.com/mcspronko/grav-plugin-newsletter",
     "license": "MIT",
     "authors": [
         {
