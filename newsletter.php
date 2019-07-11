@@ -8,6 +8,8 @@ use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
 use Grav\Plugin\Newsletter\Newsletter as CustomNewsletter;
+use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
+use RocketTheme\Toolbox\StreamWrapper\Stream;
 
 /**
  * Class NewsletterPlugin
@@ -45,9 +47,19 @@ class NewsletterPlugin extends Plugin
         return require __DIR__ . '/vendor/autoload.php';
     }
 
+    /**
+     * Creates data directory for the newsletter
+     */
     public function setup()
     {
-        // @TODO create user directory
+        /** @var ResourceLocatorInterface $locator */
+        $locator = $this->grav['locator'];
+        $subscribersDirectory = 'user://' . $this->config['plugins.newsletter.data_dir.subscribers'];
+
+        if (!$locator->findResource($subscribersDirectory)) {
+            $stream = new Stream();
+            $stream->mkdir($subscribersDirectory, 0770, true);
+        }
     }
 
     /**

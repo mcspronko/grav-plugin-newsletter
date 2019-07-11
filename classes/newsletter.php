@@ -17,6 +17,10 @@ class Newsletter
      */
     protected $grav;
 
+    /**
+     * Newsletter constructor.
+     * @param Grav $grav
+     */
     public function __construct(Grav $grav)
     {
         $this->grav = $grav;
@@ -24,13 +28,10 @@ class Newsletter
 
     public function subscribers()
     {
-        // Initialize subscriber class.
-        require_once __DIR__ . '/subscriber.php';
-
         /** @var ResourceLocatorInterface $locator */
         $locator = $this->grav['locator'];
 
-        $dataDir = $locator->findResource('user://data/newsletter/subscribers');
+        $dataDir = $locator->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
         $fullPath = $dataDir;
         $iterator = new \DirectoryIterator($fullPath);
 

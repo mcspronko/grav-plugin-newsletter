@@ -7,4 +7,6 @@ admin:
       redirect: '/newsletter'
 dateformat:
   long: 'Y-m-d h:i'
+data_dir:
+  subscribers: 'data/newsletter/subscribers'
 
