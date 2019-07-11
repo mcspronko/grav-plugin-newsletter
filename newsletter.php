@@ -6,8 +6,9 @@ use Composer\Autoload\ClassLoader;
 use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
 use Grav\Common\Twig\Twig;
+use Grav\Framework\Route\Route;
 use RocketTheme\Toolbox\Event\Event;
-use Grav\Plugin\Newsletter\Newsletter as CustomNewsletter;
+use Grav\Plugin\Newsletter\SubscribersProvider;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use RocketTheme\Toolbox\StreamWrapper\Stream;
 
@@ -96,10 +97,9 @@ class NewsletterPlugin extends Plugin
      */
     public function onTwigSiteVariables()
     {
-        /** @var Twig $twig */
-        $twig = $this->grav['twig'];
-
         if ($this->isAdmin()) {
+            /** @var Twig $twig */
+            $twig = $this->grav['twig'];
             $twig->plugins_hooked_nav = [
                 "PLUGIN_NEWSLETTER.MENU_LABEL"  => [
                     'route' => $this->config->get('plugins.newsletter.admin.route'),
@@ -107,8 +107,13 @@ class NewsletterPlugin extends Plugin
                 ]
             ];
 
-            $subscribers = new CustomNewsletter($this->grav);
-            $twig->twig_vars['audience'] = $subscribers->subscribers();
+            /** @var Route $route */
+            $route = $this->grav['route'];
+
+            if ($route->getRoute() === '/admin/newsletter') {
+                $subscribers = new SubscribersProvider($this->grav);
+                $twig->twig_vars['audience'] = $subscribers->get();
+            }
         }
     }
 }

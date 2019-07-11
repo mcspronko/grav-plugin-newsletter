@@ -19,13 +19,17 @@ modman clone git@github.com:mcspronko/grav-plugin-newsletter.git
 As a result, the new newsletter plugin should appear under user/plugins/newsletter directory. 
 
 ## Subscribers
-In order to add a new subscriber, create a new YAML file under user/data/newsletter/subscribers directory.
+In order to add a new subscriber, create a new Markdown file under <project_root>/user/data/newsletter/subscribers directory.
 
-```yaml
+```
+
+---
 name: Max Pronko
 email: max.pronko@gmail.com
-emails_sent: 0
-created: 2019-07-10 11:00:03
+is_subscribed: 1
+created: 2019-07-10 11:10:03
+---
+
 ```
 
 From Admin -> Newsletter page you will see new subscriber record.

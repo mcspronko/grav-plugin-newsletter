@@ -24,14 +24,14 @@
         </tr>
     {% else %}
         {% for member in audience|default([]) %}
-            {% set encoded_email = member.email|base64_encode|url_encode %}
+            {% set encoded_email = member.header.email|base64_encode|url_encode %}
             {% set member_delete = delete_url|replace({'SUBSCRIBER_ID': encoded_email}) %}
             <tr>
-                <td>{{ member.email }}</td>
-                <td>{{ member.name }}</td>
-                <td> <i class="fa fa-clock-o"></i> {{ member.created|date }}</td>
+                <td>{{ member.header.email }}</td>
+                <td>{{ member.header.name }}</td>
+                <td> <i class="fa fa-clock-o"></i> {{ member.header.created|date }}</td>
                 <td class="right pad">
-                    {% if member.is_subscribed == '0' %}
+                    {% if member.header.is_subscribed == '0' %}
                         {% set run_type = 'error' %}
                         {% set run_hint = job_state.error %}
                         {% set run_text = "<i class=\"fa fa-warning\"></i> Unsubscribed" %}

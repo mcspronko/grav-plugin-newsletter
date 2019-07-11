@@ -3,14 +3,14 @@
 namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Grav;
+use RocketTheme\Toolbox\File\MarkdownFile;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
-use Grav\Common\File\CompiledYamlFile;
-use RocketTheme\Toolbox\Session\Message;
+use \FilesystemIterator;
 
 /**
- * Class Newsletter
+ * Class SubscribersProvider
  */
-class Newsletter
+class SubscribersProvider
 {
     /**
      * @var Grav
@@ -26,37 +26,28 @@ class Newsletter
         $this->grav = $grav;
     }
 
-    public function subscribers()
+    /**
+     * @return array
+     */
+    public function get()
     {
         /** @var ResourceLocatorInterface $locator */
         $locator = $this->grav['locator'];
 
         $fullPath = $locator->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
-        $iterator = new \DirectoryIterator($fullPath);
+        $iterator = new FilesystemIterator($fullPath);
 
         $subscribers = [];
+        /** @var \SplFileInfo $file */
         foreach ($iterator as $file) {
             if (!$file->isFile()) {
                 continue;
             }
-            $name = $file->getBasename();
-            $subscribers[$name] = CompiledYamlFile::instance($fullPath . DS . $name)->content();
+            $filename = $file->getFilename();
+            $content = MarkdownFile::instance($file->getPathname());
+            $subscribers[$filename] = $content->content();
         }
 
         return $subscribers;
-    }
-
-    public function data($subscriber)
-    {
-        $obj = new Subscriber($subscriber);
-
-        return $obj;
-    }
-
-    public function setMessage($msg, $type = 'info')
-    {
-        /** @var Message $messages */
-        $messages = $this->grav['messages'];
-        $messages->add($msg, $type);
     }
 }
