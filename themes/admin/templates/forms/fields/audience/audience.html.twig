@@ -1,5 +1,17 @@
-{% set delete_url = uri.addNonce(base_url_relative ~ "/subscriber.json/subscriber:%SUBSCRIBER/task" ~ config.system.param_sep ~ 'subscriberDelete', 'admin-form', 'admin-nonce') %}
-
+{% set delete_url = uri.addNonce(base_url_relative ~ "/subscriber.json/subscriber:SUBSCRIBER_ID/task" ~ config.system.param_sep ~ 'subscriberDelete', 'admin-form', 'admin-nonce') %}
+<div class="admin-block">
+    <div class="latest">
+        <div class="button-bar" style="text-align: right;
+    float: right;
+    z-index: 0;
+    padding: 0;
+    background: 0;
+    width: auto;">
+            <a class="button" href="#modal" data-remodal-target="modal-subscriber"><i class="fa fa-fw fa-plus"></i>{{ "Add Subscriber"|tu }}</a>
+        </div>
+        <h1>{{ "Subscribers"|tu }}</h1>
+    </div>
+</div>
 <span>nbsp;</span>
 <div class="alert info">{{ 'You have' }} <strong>{{ audience|count }}</strong> {{ 'subscribers.' }}</div>
 <table class="newsletter-audience noflex">
@@ -19,9 +31,9 @@
     {% else %}
         {% for member in audience|default([]) %}
             {% set encoded_email = member.email|base64_encode|url_encode %}
-            {% set member_delete = delete_url|replace({'%SUBSCRIBER': 'test'}) %}
+            {% set member_delete = delete_url|replace({'SUBSCRIBER_ID': encoded_email}) %}
             <tr>
-                <td>{{ member.email }} {{ delete_url }} {{ member_delete }}</td>
+                <td>{{ member.email }}</td>
                 <td>{{ member.name }}</td>
                 <td> <i class="fa fa-clock-o"></i> {{ member.created|date }}</td>
                 <td class="right pad">
@@ -49,3 +61,7 @@
     {% endif %}
     </tbody>
 </table>
+
+<div class="remodal" data-remodal-id="modal-subscriber" data-remodal-options="hashTracking: false">
+    {% include 'partials/blueprints-new-subscriber.html.twig' with { blueprints: admin.blueprints('pages/admin/new_subscriber'), form_id:'new-subscriber' } %}
+</div>

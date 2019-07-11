@@ -7,9 +7,8 @@ title: Newsletter
 form:
   validation: loose
   action: /subscribe.json
-
+    
   fields:
-
     tabs:
       type: tabs
       active: 1
@@ -20,11 +19,6 @@ form:
           title: 'Audience'
 
           fields:
-
-            publishing:
-              type: section
-              title: 'Subscribers'
-              underline: true 
             audience:
               type: audience
 
