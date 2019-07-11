@@ -72,6 +72,10 @@ class NewsletterPlugin extends Plugin
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
 
+        $this->enable([
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
+        ]);
+
         if ($this->isAdmin()) {
             $twig->plugins_hooked_nav = [
                 "PLUGIN_NEWSLETTER.MENU_LABEL"  => [
@@ -81,10 +85,6 @@ class NewsletterPlugin extends Plugin
             ];
             $this->enable([
                 'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0]
-            ]);
-        } else {
-            $this->enable([
-                'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
             ]);
         }
     }

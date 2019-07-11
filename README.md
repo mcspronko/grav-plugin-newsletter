@@ -1,8 +1,8 @@
-# Notice
-This plugin is under development. Pull requests and contributions are more than welcome.
+# Notice - 2019
+The Newsletter plugin is under development. Pull requests and contributions are more than welcome.
 
 # Newsletter Plugin for Grav CMS
-Newsletter Plugin enables users fill in subscription form on a website based on Grav CMS.
+Newsletter Plugin provides a subscription functionality in order to subscribe to a newsletter.
 
 ## Installation
 
@@ -17,6 +17,20 @@ modman clone git@github.com:mcspronko/grav-plugin-newsletter.git
 ```
 
 As a result, the new newsletter plugin should appear under user/plugins/newsletter directory. 
+
+## Subscribers
+In order to add a new subscriber, create a new YAML file under user/data/newsletter/subscribers directory.
+
+```yaml
+name: Max Pronko
+email: max.pronko@gmail.com
+emails_sent: 0
+created: 2019-07-10 11:00:03
+```
+
+From Admin -> Newsletter page you will see new subscriber record.
+
+
 
 ## Example of Form Configuration
 ```yaml
