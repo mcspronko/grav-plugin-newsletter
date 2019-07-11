@@ -3,8 +3,10 @@
 namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Grav;
-use Grav\Common\Utils;
 
+/**
+ * Class SubscriberController
+ */
 class SubscriberController
 {
     /**

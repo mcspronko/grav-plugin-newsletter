@@ -3,9 +3,7 @@
 namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Grav;
-use Grav\Common\Utils;
 use Grav\Plugin\Form;
-use Grav\Plugin\NewsletterPlugin;
 use RocketTheme\Toolbox\File\File;
 use Symfony\Component\Yaml\Yaml;
 use Grav\Common\Twig\Twig;
