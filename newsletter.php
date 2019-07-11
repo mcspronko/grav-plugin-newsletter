@@ -72,9 +72,6 @@ class NewsletterPlugin extends Plugin
     public function onTwigInitialized()
     {
         if ($this->isAdmin()) {
-            /** @var Twig $twig */
-            $twig = $this->grav['twig'];
-            $twig->twig_vars['newsletter'] = new CustomNewsletter($this->grav);
         }
     }
 
@@ -101,50 +98,9 @@ class NewsletterPlugin extends Plugin
                     'icon' => $this->config->get('plugins.newsletter.admin.menu_icon')
                 ]
             ];
+
+            $subscribers = new CustomNewsletter($this->grav);
+            $twig->twig_vars['audience'] = $subscribers->subscribers();
         }
     }
-
-//    public function subscriberController()
-//    {
-//        /** @var Uri $uri */
-//        $uri = $this->grav['uri'];
-//        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
-//        $task = substr($task, strlen('subscriber.'));
-//        $post = !empty($_POST) ? $_POST : $uri->params(null, true);
-//
-//        if (method_exists('Grav\Common\Utils', 'getNonce')) {
-//            if ($task == 'enable') {
-//                if (!isset($post['login-form-nonce']) || !Utils::verifyNonce($post['login-form-nonce'], 'login-form')) {
-//                    $this->grav['messages']->add($this->grav['language']->translate('PLUGIN_LOGIN.ACCESS_DENIED'), 'info');
-//                    $this->authenticated = false;
-//                    $twig = $this->grav['twig'];
-//                    $twig->twig_vars['notAuthorized'] = true;
-//                    return;
-//                }
-//            }
-//        }
-//        $post['_redirect'] = 'admin/newsletter';
-//        $controller = new Newsletter\SubscriberController($this->grav, $task, $post);
-//        $controller->execute();
-//        $controller->redirect();
-//    }
-//
-//    /**
-//     * Create subscriber
-//     *
-//     * @param Event $event
-//     */
-//    public function createSubscriberController(Event $event)
-//    {
-//        $form = $event['form'];
-//        $action = $event['action'];
-//        $params = $event['params'];
-//
-//        switch ($action) {
-//            case 'subscribe':
-//                $controller = new Newsletter\SubscribeController($this->grav, $action, $form, $params, $this->newsletter);
-//                $controller->execute();
-//                break;
-//        }
-//    }
 }
