@@ -24,11 +24,3 @@ form:
         0: Disabled
       validate:
         type: bool
-
-    limit:
-      type: text
-      label: Test
-      validate:
-        type: number
-        min: 10
-        max: 1000
