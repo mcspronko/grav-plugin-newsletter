@@ -1,7 +1,7 @@
 # Newsletter Plugin for Grav CMS
 Newsletter Plugin provides a subscription functionality in order to subscribe to a newsletter.
 
-![Newsletter Audience](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/pronko-grav-newsletter.png "Newsletter Plugin")
+![Newsletter Main Screen](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/newsletter-main.png "Newsletter Plugin")
 
 
 ## Installation

@@ -17,6 +17,7 @@ form:
         content:
           type: tab
           title: 'Audience'
+          underline: false
 
           fields:
             audience:

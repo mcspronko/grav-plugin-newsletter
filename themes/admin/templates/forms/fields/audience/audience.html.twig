@@ -2,7 +2,7 @@
 <div class="newsletter-audience-admin admin-block">
     <div class="latest">
         <div class="button-bar">
-            <a class="button" href="#modal" data-remodal-target="modal-subscriber"><i class="fa fa-fw fa-plus"></i>{{ "Add Subscriber"|tu }}</a>
+            <a class="button" href="#modal" data-remodal-target="modal"><i class="fa fa-fw fa-plus"></i>{{ "Add Subscriber"|tu }}</a>
         </div>
         <h1>{{ "Subscribers"|tu }}</h1>
     </div>
@@ -56,6 +56,11 @@
     </tbody>
 </table>
 
-<div class="remodal" data-remodal-id="modal-subscriber" data-remodal-options="hashTracking: false">
-    {% include 'partials/blueprints-new-subscriber.html.twig' with { blueprints: admin.blueprints('pages/admin/new_subscriber'), form_id:'new-subscriber' } %}
+<!-- Temporary styles fix for #modal div element -->
+<div class="remodal" data-remodal-id="modal2" data-remodal-options="hashTracking: false">
+    {% include 'partials/blueprints-new-subscriber.html.twig' with { blueprints: admin.blueprints('pages/admin/new_subscriber'), form_id: 'new-subscriber' } %}
+</div>
+
+<div class="remodal" data-remodal-id="modal" data-remodal-options="hashTracking: false">
+    {% include 'partials/blueprints-new-subscriber.html.twig' with { blueprints: admin.blueprints('pages/admin/new_subscriber'), form_id: 'new-subscriber' } %}
 </div>

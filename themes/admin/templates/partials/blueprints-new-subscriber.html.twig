@@ -11,9 +11,9 @@
         {% endif %}
     {% endfor %}
 
-    <input type="hidden" name="task" value="saveNewFolder" />
+    <input type="hidden" name="task" value="saveNewSubscriber" />
     <div class="button-bar">
-        <button class="button primary">{{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
+        <button class="button primary">{{ "Save"|tu }}</button>
     </div>
 
     {{ nonce_field('admin-form', 'admin-nonce')|raw }}
