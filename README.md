@@ -3,7 +3,6 @@ Newsletter Plugin provides a subscription functionality in order to subscribe to
 
 ![Newsletter Main Screen](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/newsletter-main.png "Newsletter Plugin")
 
-
 ## Installation
 
 ### Development
@@ -19,6 +18,16 @@ modman clone git@github.com:mcspronko/grav-plugin-newsletter.git
 As a result, the new newsletter plugin should appear under user/plugins/newsletter directory. 
 
 ## Subscribers
+
+### Admin
+
+Navigate to the Admin -> Newsletter -> Audience page and click the "Add Subscriber" button. 
+Fill in all required fields and hit the "Save" button.
+
+![Add New Subscriber Modal](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/newsletter-add-subcriber-modal.png "Add New Subscriber Modal")
+
+
+### Manually
 In order to add a new subscriber, create a new Markdown file under <project_root>/user/data/newsletter/subscribers directory.
 
 ```
@@ -36,7 +45,7 @@ From Admin -> Newsletter page you will see new subscriber record.
 
 
 
-## Example of Form Configuration
+## Example of a Form Configuration
 ```yaml
 form:
     name: newsletter
