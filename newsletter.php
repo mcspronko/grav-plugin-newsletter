@@ -6,6 +6,7 @@ use Composer\Autoload\ClassLoader;
 use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
 use Grav\Common\Twig\Twig;
+use Grav\Common\Uri;
 use Grav\Framework\Route\Route;
 use Grav\Plugin\Admin\Admin;
 use Grav\Plugin\Newsletter\SubscriberController;
@@ -96,9 +97,18 @@ class NewsletterPlugin extends Plugin
         $this->admin->task = $task = $this->grav['task'];
         if ($task) {
             // Make local copy of POST.
-            $post = $this->grav['uri']->post();
-            $this->initializeController($task, $post);
+            $post = $this->getUri()->post() ?: [];
+            $params = array_merge_recursive($post, $this->getUri()->params(null, true));
+            $this->initializeController($task, $params);
         }
+    }
+
+    /**
+     * @return Uri
+     */
+    protected function getUri()
+    {
+        return $this->grav['uri'];
     }
 
     /**

@@ -7,6 +7,7 @@ use Grav\Plugin\Admin\AdminBaseController;
 use RocketTheme\Toolbox\Event\Event;
 use DateTime;
 use Exception;
+use RocketTheme\Toolbox\File\File;
 
 /**
  * Class SubscriberController
@@ -137,8 +138,7 @@ class SubscriberController extends AdminBaseController
 
         try {
             $this->prepareSubscriber($subscriber);
-            $subscriber->save();
-//            $obj->validate();
+            //$obj->validate();
 
         } catch (\Exception $e) {
             $this->admin->setMessage($e->getMessage(), 'error');
@@ -149,6 +149,7 @@ class SubscriberController extends AdminBaseController
         if ($subscriber) {
             // Event to manipulate data before saving the object
             $this->grav->fireEvent('onAdminSave', new Event(['object' => &$subscriber]));
+            $subscriber->save();
             $this->admin->setMessage($this->admin::translate('PLUGIN_ADMIN.SUCCESSFULLY_SAVED'), 'info');
             $this->grav->fireEvent('onAdminAfterSave', new Event(['object' => $subscriber]));
         }
@@ -156,6 +157,31 @@ class SubscriberController extends AdminBaseController
         $this->setRedirect($this->admin->base . '/newsletter');
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function taskDeleteSubscriber()
+    {
+        if (!$this->authorizeTask('deleteSubscriber', $this->dataPermissions())) {
+            return false;
+        }
+        $email = base64_decode($this->post['subscriber']);
+
+        /** @var Subscriber $subscriber */
+        $subscriber = new Subscriber($this->grav);
+
+        $filename = preg_replace('|.*/|', '', strtolower($email));
+        $subscriber->setFilename($filename);
+
+        $markdownFile = $subscriber->getFileObject();
+        $file = File::instance($markdownFile->filename());
+        $file->delete();
+
+        $this->admin->setMessage($this->admin::translate('Subscriber has been successfully deleted.'), 'info');
+
+        $this->setRedirect($this->admin->base . '/newsletter');
     }
 
     /**
