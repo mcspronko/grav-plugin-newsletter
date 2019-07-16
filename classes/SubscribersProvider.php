@@ -31,10 +31,7 @@ class SubscribersProvider
      */
     public function get()
     {
-        /** @var ResourceLocatorInterface $locator */
-        $locator = $this->grav['locator'];
-
-        $fullPath = $locator->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
+        $fullPath = $this->getLocator()->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
         $iterator = new FilesystemIterator($fullPath);
 
         $subscribers = [];
@@ -49,5 +46,13 @@ class SubscribersProvider
         }
 
         return $subscribers;
+    }
+
+    /**
+     * @return ResourceLocatorInterface
+     */
+    protected function getLocator()
+    {
+        return $this->grav['locator'];
     }
 }

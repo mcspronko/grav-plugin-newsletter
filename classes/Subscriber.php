@@ -3,7 +3,6 @@
 namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Data\Data;
-use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\File\MarkdownFile;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
@@ -36,30 +35,6 @@ class Subscriber extends Data
     }
 
     /**
-     * @param string $email
-     * @param array $post
-     * @return Subscriber
-     */
-    public function load($email, array $post = [])
-    {
-        /** @var ResourceLocatorInterface $locator */
-        $locator = $this->grav['locator'];
-
-        // force lowercase of username
-        $email = strtolower($email);
-
-        /** @var  $content */
-        $filePath = $locator->findResource('user://data/newsletter/subscribers/' . $email . YAML_EXT);
-        $file = CompiledYamlFile::instance($filePath);
-        $subscriber = new Subscriber(array_merge($file->content(), $post));
-        if ($subscriber) {
-            $subscriber->file($file);
-        }
-
-        return $subscriber;
-    }
-
-    /**
      * Get file object to the page.
      *
      * @return MarkdownFile|null
@@ -67,7 +42,7 @@ class Subscriber extends Data
     public function getFileObject()
     {
         if ($this->filename) {
-            $filename = $this->getLocator()->findResource('user://data/newsletter/subscribers/');
+            $filename = $this->getLocator()->findResource('user://' . $this->grav['config']['plugins.newsletter.data_dir.subscribers']);
             $filename .= '/' . $this->filename . '.md';
             return MarkdownFile::instance($filename);
         }
@@ -81,14 +56,6 @@ class Subscriber extends Data
     public function setFilename($filename)
     {
         $this->filename = $filename;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilePath()
-    {
-        return $this->getLocator()->findResource('user://data/newsletter/subscribers/' . $this->filename . YAML_EXT);
     }
 
     /**
