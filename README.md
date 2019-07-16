@@ -15,20 +15,22 @@ modman init
 modman clone git@github.com:mcspronko/grav-plugin-newsletter.git
 ```
 
-As a result, the new newsletter plugin should appear under user/plugins/newsletter directory. 
+As a result, the Newsletter plugin should appear under _user/plugins/newsletter_ directory. 
 
 ## Subscribers
 
-### Admin
+There are two ways on how you can add new subscriber to the system.
 
-Navigate to the Admin -> Newsletter -> Audience page and click the "Add Subscriber" button. 
+### Admin Panel
+
+Navigate to the **Admin -> Newsletter -> Audience** page and click the "Add Subscriber" button. 
 Fill in all required fields and hit the "Save" button.
 
 ![Add New Subscriber Modal](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/newsletter-add-subcriber-modal.png "Add New Subscriber Modal")
 
 
 ### Manually
-In order to add a new subscriber, create a new Markdown file under <project_root>/user/data/newsletter/subscribers directory.
+In order to add a new subscriber, create a new Markdown file under _<project_root>/user/data/newsletter/subscribers_ directory.
 
 ```
 
@@ -41,7 +43,7 @@ created: 2019-07-10 11:10:03
 
 ```
 
-From Admin -> Newsletter page you will see new subscriber record.
+From **Admin -> Newsletter** page you will see new subscriber record.
 
 
 
