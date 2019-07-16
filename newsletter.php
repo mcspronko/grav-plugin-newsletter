@@ -137,12 +137,16 @@ class NewsletterPlugin extends Plugin
     public function onTwigSiteVariables()
     {
         if ($this->isAdmin()) {
-            /** @var Twig $twig */
-            $twig = $this->grav['twig'];
-            $twig->plugins_hooked_nav = [
+            $subscribers = new SubscribersProvider($this->grav);
+
+            $this->getTwig()->plugins_hooked_nav = [
                 "PLUGIN_NEWSLETTER.MENU_LABEL"  => [
                     'route' => $this->config->get('plugins.newsletter.admin.route'),
-                    'icon' => $this->config->get('plugins.newsletter.admin.menu_icon')
+                    'icon' => $this->config->get('plugins.newsletter.admin.menu_icon'),
+                    'badge' => [
+                        'updates' => false,
+                        'count' => count($subscribers->get())
+                    ]
                 ]
             ];
 
@@ -151,8 +155,16 @@ class NewsletterPlugin extends Plugin
 
             if ($route->getRoute() === '/admin/newsletter') {
                 $subscribers = new SubscribersProvider($this->grav);
-                $twig->twig_vars['audience'] = $subscribers->get();
+                $this->getTwig()->twig_vars['audience'] = $subscribers->get();
             }
         }
+    }
+
+    /**
+     * @return Twig
+     */
+    protected function getTwig()
+    {
+        return $this->grav['twig'];
     }
 }
