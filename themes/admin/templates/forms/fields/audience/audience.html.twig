@@ -29,7 +29,7 @@
             <tr>
                 <td>{{ member.header.email }}</td>
                 <td>{{ member.header.name }}</td>
-                <td> <i class="fa fa-clock-o"></i> {{ member.header.created|date }}</td>
+                <td> <i class="fa fa-clock-o"></i> {{ member.header.created|date("F jS Y \\a\\t g:ia") }}</td>
                 <td class="right pad">
                     {% if member.header.is_subscribed == '0' %}
                         {% set run_type = 'error' %}
