@@ -7,7 +7,9 @@
         <h1>{{ "Subscribers"|tu }}</h1>
     </div>
 </div>
-<div class="alert info">{{ 'You have' }} <strong>{{ audience|count }}</strong> {{ 'subscribers.' }}</div>
+{% if audience|count != 0 %}
+<div class="alert info">{{ 'You have' }} <strong>{{ audience|count }}</strong> {% if audience|count == 1 %} {{ 'subscriber.' }} {% else %} {{ 'subscribers.' }}{% endif %}</div>
+{% endif %}
 <table class="newsletter-audience noflex">
     <thead>
     <tr>
