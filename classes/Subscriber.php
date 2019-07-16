@@ -5,6 +5,7 @@ namespace Grav\Plugin\Newsletter;
 use Grav\Common\Data\Data;
 use Grav\Common\File\CompiledYamlFile;
 use Grav\Common\Grav;
+use RocketTheme\Toolbox\File\MarkdownFile;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 
 /**
@@ -17,6 +18,17 @@ class Subscriber extends Data
      */
     protected $grav;
 
+    /**
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * Subscriber constructor.
+     * @param Grav $grav
+     * @param array $items
+     * @param null $blueprints
+     */
     public function __construct(Grav $grav, array $items = [], $blueprints = null)
     {
         $this->grav = $grav;
@@ -45,5 +57,45 @@ class Subscriber extends Data
         }
 
         return $subscriber;
+    }
+
+    /**
+     * Get file object to the page.
+     *
+     * @return MarkdownFile|null
+     */
+    public function getFileObject()
+    {
+        if ($this->filename) {
+            $filename = $this->getLocator()->findResource('user://data/newsletter/subscribers/');
+            $filename .= '/' . $this->filename . '.md';
+            return MarkdownFile::instance($filename);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->getLocator()->findResource('user://data/newsletter/subscribers/' . $this->filename . YAML_EXT);
+    }
+
+    /**
+     * @return ResourceLocatorInterface
+     */
+    protected function getLocator()
+    {
+        return $this->grav['locator'];
     }
 }

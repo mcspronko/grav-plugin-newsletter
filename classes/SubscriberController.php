@@ -3,21 +3,20 @@
 namespace Grav\Plugin\Newsletter;
 
 use Grav\Common\Grav;
+use Grav\Plugin\Admin\AdminBaseController;
+use RocketTheme\Toolbox\Event\Event;
+use DateTime;
+use Exception;
 
 /**
  * Class SubscriberController
  */
-class SubscriberController
+class SubscriberController extends AdminBaseController
 {
     /**
-     * @var \Grav\Common\Grav
+     * @var Grav
      */
     public $grav;
-
-    /**
-     * @var string
-     */
-    public $action;
 
     /**
      * @var array
@@ -39,43 +38,16 @@ class SubscriberController
     protected $prefix = 'do';
 
     /**
-     * @param Grav   $grav
-     * @param string $action
-     * @param array  $post
+     * @param Grav $grav
+     * @param string $task
+     * @param array|null $post
      */
-    public function __construct(Grav $grav, $action, $post = null)
+    public function initialize(Grav $grav, string $task, $post = null)
     {
         $this->grav = $grav;
-        $this->action = $action;
+        $this->task = $task;
         $this->post = $post;
-    }
-
-    public function execute()
-    {
-        // Set redirect if available.
-        if (isset($this->post['_redirect'])) {
-            $redirect = $this->post['_redirect'];
-            unset($this->post['_redirect']);
-        }
-
-        $success = false;
-        $method = $this->prefix . ucfirst($this->action);
-
-        if (!method_exists($this, $method)) {
-            throw new \RuntimeException('Page Not Found', 404);
-        }
-
-        try {
-            $success = call_user_func([$this, $method]);
-        } catch (\RuntimeException $e) {
-            $this->setMessage($e->getMessage());
-        }
-
-        if (!$this->redirect && isset($redirect)) {
-            $this->setRedirect($redirect);
-        }
-
-        return $success;
+        $this->admin = $grav['admin'];
     }
 
     public function doEnable()
@@ -144,5 +116,74 @@ class SubscriberController
     {
         $this->redirect = $path;
         $this->code = $code;
+    }
+
+    /**
+     * Handles subscriber creation task
+     *
+     * @return bool True if the action was performed.
+     */
+    public function taskSaveNewSubscriber()
+    {
+        if (!$this->authorizeTask('saveNewSubscriber', $this->dataPermissions())) {
+            return false;
+        }
+
+        $data = (array)$this->post['data'];
+        $this->grav['twig']->twig_vars['current_form_data'] = $data;
+
+        /** @var Subscriber $subscriber */
+        $subscriber = new Subscriber($this->grav);
+
+        try {
+            $this->prepareSubscriber($subscriber);
+            $subscriber->save();
+//            $obj->validate();
+
+        } catch (\Exception $e) {
+            $this->admin->setMessage($e->getMessage(), 'error');
+
+            return false;
+        }
+
+        if ($subscriber) {
+            // Event to manipulate data before saving the object
+            $this->grav->fireEvent('onAdminSave', new Event(['object' => &$subscriber]));
+            $this->admin->setMessage($this->admin::translate('PLUGIN_ADMIN.SUCCESSFULLY_SAVED'), 'info');
+            $this->grav->fireEvent('onAdminAfterSave', new Event(['object' => $subscriber]));
+        }
+
+        $this->setRedirect($this->admin->base . '/newsletter');
+
+        return true;
+    }
+
+    /**
+     * @param Subscriber $subscriber
+     * @throws Exception
+     */
+    protected function prepareSubscriber(Subscriber $subscriber)
+    {
+        $input = (array)$this->post['data'];
+
+        if (isset($input['email']) && !empty($input['email'])) {
+            $filename = preg_replace('|.*/|', '', strtolower($input['email']));
+            $subscriber->setFilename($filename);
+        }
+
+        if (isset($input['name'], $input['email'])) {
+            $subscriber->merge(
+                [
+                    'header' => [
+                        'name' => (string)$input['name'],
+                        'email' => (string)$input['email'],
+                        'is_subscribed' => true,
+                        'created' => new DateTime()
+                    ]
+                ]
+            );
+
+            $subscriber->file($subscriber->getFileObject());
+        }
     }
 }

@@ -7,6 +7,8 @@ use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
 use Grav\Common\Twig\Twig;
 use Grav\Framework\Route\Route;
+use Grav\Plugin\Admin\Admin;
+use Grav\Plugin\Newsletter\SubscriberController;
 use RocketTheme\Toolbox\Event\Event;
 use Grav\Plugin\Newsletter\SubscribersProvider;
 use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
@@ -17,6 +19,11 @@ use RocketTheme\Toolbox\StreamWrapper\Stream;
  */
 class NewsletterPlugin extends Plugin
 {
+    /**
+     * @var Admin
+     */
+    private $admin;
+
     /**
      * @return array
      */
@@ -34,7 +41,8 @@ class NewsletterPlugin extends Plugin
             'onAdminTwigSiteVariables' => ['onAdminTwigSiteVariables', 0],
             'onTask.subscriber.enable' => ['subscriberController', 0],
             'onTask.subscriber.disable' => ['subscriberController', 0],
-            'onFormProcessed' => ['createSubscriberController', 0]
+            'onFormProcessed' => ['createSubscriberController', 0],
+            'onPageInitialized'    => ['onPageInitialized', 0],
         ];
     }
 
@@ -78,6 +86,34 @@ class NewsletterPlugin extends Plugin
     }
 
     /**
+     * Process POST operations
+     */
+    public function onPageInitialized()
+    {
+        $this->admin = $this->grav['admin'];
+
+        // Handle tasks.
+        $this->admin->task = $task = $this->grav['task'];
+        if ($task) {
+            // Make local copy of POST.
+            $post = $this->grav['uri']->post();
+            $this->initializeController($task, $post);
+        }
+    }
+
+    /**
+     * @param string $task
+     * @param array $post
+     */
+    protected function initializeController($task, $post)
+    {
+        $controller = new SubscriberController();
+        $controller->initialize($this->grav, $task, $post);
+        $controller->execute();
+        $controller->redirect();
+    }
+
+    /**
      * @param Event $event
      */
     public function onAdminTwigTemplatePaths(Event $event)
@@ -85,7 +121,10 @@ class NewsletterPlugin extends Plugin
         $event['paths'] = [__DIR__ . '/themes/admin/templates'];
     }
 
-    public function onGetPageBlueprints($event)
+    /**
+     * @param Event $event
+     */
+    public function onGetPageBlueprints(Event $event)
     {
         /** @var Types $types */
         $types = $event->types;
