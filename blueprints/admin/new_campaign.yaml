@@ -6,11 +6,22 @@ form:
       type: section
       title: 'Create an email'
 
-    name:
+    title:
       type: text
       label: 'Campaign Name'
       validate:
         required: true
+    folder:
+      type: hidden
+      default: '@slugify-title'
+
+    name:
+      type: hidden
+      default: 'campaign'
+
+    route:
+      type: hidden
+      default: /campaign
 
     blueprint:
       type: blueprint

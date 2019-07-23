@@ -95,6 +95,15 @@ class NewsletterPlugin extends Plugin
 
         // Handle tasks.
         $this->admin->task = $task = $this->grav['task'];
+
+        if ('createCampaign' === $task) {
+            $post = $this->getUri()->post() ?: [];
+            $params = array_merge_recursive($post, $this->getUri()->params(null, true));
+
+            $this->grav->redirect($this->admin->base . '/campaign/' . $params['data']['title'], 301);
+            return;
+        }
+
         if ($task) {
             // Make local copy of POST.
             $post = $this->getUri()->post() ?: [];
@@ -167,6 +176,8 @@ class NewsletterPlugin extends Plugin
                 $subscribers = new SubscribersProvider($this->grav);
                 $this->getTwig()->twig_vars['audience'] = $subscribers->get();
                 $this->getTwig()->twig_vars['campaigns'] = [];
+            } elseif (strpos($route->getRoute(), '/admin/newsletter/campaign/') !== false) {
+
             }
         }
     }

@@ -1,0 +1,14 @@
+{% extends 'partials/base-root.html.twig' %}
+
+{% if admin.route %}
+    {% set context = admin.page(true) %}
+{% endif %}
+
+{% block titlebar %}
+<h1><i class="fa fa-fw fa-file-text-o"></i>{{ context.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+{% endblock %}
