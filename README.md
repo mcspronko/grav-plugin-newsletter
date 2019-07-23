@@ -45,6 +45,11 @@ created: 2019-07-10 11:10:03
 
 From **Admin -> Newsletter** page you will see new subscriber record.
 
+## Campaigns
+
+In order to create new campaign, navigate to the **Admin -> Newsletter -> Campaigns** page and click the "Create Campaign" button.
+
+![Add New Subscriber Modal](https://github.com/mcspronko/grav-plugin-newsletter/raw/master/docs/create-campaign-modal.png "Add New Subscriber Modal")
 
 
 ## Example of a Form Configuration
