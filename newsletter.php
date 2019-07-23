@@ -166,6 +166,7 @@ class NewsletterPlugin extends Plugin
             if ($route->getRoute() === '/admin/newsletter') {
                 $subscribers = new SubscribersProvider($this->grav);
                 $this->getTwig()->twig_vars['audience'] = $subscribers->get();
+                $this->getTwig()->twig_vars['campaigns'] = [];
             }
         }
     }

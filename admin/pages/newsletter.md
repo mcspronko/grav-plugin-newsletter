@@ -23,24 +23,12 @@ form:
             audience:
               type: audience
 
-        campaigns:
+        campaign:
           type: tab
           title: 'Campaigns'
-
+          underline: false
+ 
           fields:
-
-            publishing:
-              type: section
-              title: 'Campaigns'
-              underline: true
-        templates:
-          type: tab
-          title: 'Templates'
-
-          fields:
-
-            publishing:
-              type: section
-              title: 'Newsletter Templates'
-              underline: true
+            campaign:
+              type: campaign
 ---

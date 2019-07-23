@@ -1,0 +1,16 @@
+form:
+  validation: loose
+  fields:
+
+    section:
+      type: section
+      title: 'Create an email'
+
+    name:
+      type: text
+      label: 'Campaign Name'
+      validate:
+        required: true
+
+    blueprint:
+      type: blueprint

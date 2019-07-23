@@ -1,0 +1,75 @@
+{% set delete_url = uri.addNonce(base_url_relative ~ "/newsletter/subscriber:SUBSCRIBER_ID/task" ~ config.system.param_sep ~ 'deleteSubscriber', 'admin-form', 'admin-nonce') %}
+
+<div class="newsletter-audience-admin admin-block">
+    <div class="latest">
+        <div class="button-bar">
+            <a class="button" href="#modal" data-remodal-target="modal-campaign"><i class="fa fa-fw fa-plus"></i>{{ "Create Campaign"|tu }}</a>
+        </div>
+        <h1>{{ "Campaigns"|tu }}</h1>
+    </div>
+</div>
+
+<table class="newsletter-audience noflex">
+    <thead>
+    <tr>
+        <th>{{ "Campaign Name"|tu }}</th>
+        <th class="pad">{{ "Sent"|tu }}</th>
+        <th class="right pad">{{ "Status"|tu }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if campaigns|count == 0 %}
+        <tr>
+            <td colspan="5" class="error" style="text-align: center;">{{ "There are no campaigns created."|tu }}</td>
+        </tr>
+    {% else %}
+        {% for campaign in campaigns|default([]) %}
+            {% set encoded_email = member.header.email|base64_encode|url_encode %}
+            {% set member_delete = delete_url|replace({'SUBSCRIBER_ID': encoded_email}) %}
+            <tr>
+                <td>{{ member.header.email }}</td>
+                <td>{{ member.header.name }}</td>
+                <td> <i class="fa fa-clock-o"></i> {{ member.header.created|date("F jS Y \\a\\t g:ia") }}</td>
+                <td class="right pad">
+                    {% if member.header.is_subscribed == '0' %}
+                        {% set run_type = 'error' %}
+                        {% set run_hint = job_state.error %}
+                        {% set run_text = "<i class=\"fa fa-warning\"></i> Unsubscribed" %}
+                    {% else %}
+                        {% set run_type = 'info' %}
+                        {% if job_state.state is not defined %}
+                            {% set run_text = "<i class=\"fa fa-check\"></i> Subscribed"  %}
+                        {% else %}
+                            {% set run_text = "<i class=\"fa fa-check\"></i> Success" %}
+                        {% endif %}
+                    {% endif %}
+
+                    <span>
+                        <span class="badge {{ run_type }}">{{ run_text|raw }}</span>
+                    </span>
+                <td class="right pad nowrap">
+                    <a class="button" href="#delete" data-remodal-target="delete" data-delete-url="{{ member_delete }}"><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+
+<div class="remodal" data-remodal-id="modal-campaign" data-remodal-options="hashTracking: false">
+    {% include 'partials/blueprints-new-campaign.html.twig' with { blueprints: admin.blueprints('pages/admin/new_campaign'), form_id: 'new-campaign' } %}
+</div>
+
+<div class="remodal" data-remodal-id="delete" data-remodal-options="hashTracking: false">
+    <form>
+        <h1>{{ "PLUGIN_ADMIN.MODAL_DELETE_PAGE_CONFIRMATION_REQUIRED_TITLE"|tu }}</h1>
+        <p class="bigger">
+            {{ "Are you sure you want to delete this subscriber?"|tu }}
+        </p>
+        <br>
+        <div class="button-bar">
+            <button data-remodal-action="cancel" class="button secondary remodal-cancel"><i class="fa fa-fw fa-close"></i> {{ "PLUGIN_ADMIN.CANCEL"|tu }}</button>
+            <a class="button disable-after-click" data-delete-action href="#"><i class="fa fa-fw fa-check"></i> {{ "PLUGIN_ADMIN.CONTINUE"|tu }}</a>
+        </div>
+    </form>
+</div>
